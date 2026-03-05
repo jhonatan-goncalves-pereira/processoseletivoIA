@@ -164,7 +164,7 @@ Implemente no arquivo `train_model.py` um código que realize:
   (utilizando camadas `Conv2D` e `MaxPooling`)
 - Treinamento do modelo
 - Exibição da **acurácia final** no terminal
-- Salvamento do modelo treinado no formato **Keras** (`.h5` ou `.keras`)
+- Salvamento do modelo treinado no formato **Keras** (`.h5`)
 
 (*O modelo salvo será utilizado na etapa de otimização.*)
 
