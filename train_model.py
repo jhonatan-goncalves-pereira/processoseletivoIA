@@ -56,10 +56,7 @@ model.summary()
 model.compile(
     optimizer="adam",
     loss="sparse_categorical_crossentropy",
-    metrics=[
-        "accuracy",
-        keras.metrics.AUC(name="auc", multi_label=False),
-    ],
+    metrics=["accuracy"],
 )
 
 print("\n Iniciando treinamento...\n")
@@ -74,11 +71,10 @@ history = model.fit(
 
 
 print("\n Avaliação no conjunto de teste:")
-test_loss, test_acc, test_auc = model.evaluate(x_test, y_test, verbose=0)
+test_loss, test_acc = model.evaluate(x_test, y_test, verbose=0)
 
 print(f"  → Loss     : {test_loss:.4f}")
 print(f"  → Accuracy : {test_acc * 100:.2f}%")
-print(f"  → AUC      : {test_auc:.4f}")
 
 
 # 5. Salvamento do modelo
