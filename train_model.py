@@ -2,8 +2,8 @@ import tensorflow as tf
 from tensorflow import keras
 from tensorflow.keras import layers
 
-#insira seu código aqui
-# 1. Carregamento e pré-processamento do MNIST
+#carregamento e pré-processamento do MNIST
+
 (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
 
 # Adiciona dimensão de canal (grayscale) e normaliza para [0, 1]
@@ -29,11 +29,11 @@ model = keras.Sequential(
         keras.Input(shape=(28, 28, 1)),
 
         # bloco 1  extrai bordas e texturas simples
-        layers.Conv2D(16, kernel_size=3, activation="relu", padding="same"),
+        layers.Conv2D(32, kernel_size=3, activation="relu", padding="same"),
         layers.MaxPooling2D(pool_size=2),
 
         # bloco 2 combina características em padrões mais complexos
-        layers.Conv2D(32, kernel_size=3, activation="relu", padding="same"),
+        layers.Conv2D(64, kernel_size=3, activation="relu", padding="same"),
         layers.MaxPooling2D(pool_size=2),
 
         # ceduz mapa de características para 1 valor por filtro
@@ -76,9 +76,6 @@ test_loss, test_acc = model.evaluate(x_test, y_test, verbose=0)
 print(f"  → Loss     : {test_loss:.4f}")
 print(f"  → Accuracy : {test_acc * 100:.2f}%")
 
-
-# 5. Salvamento do modelo
+#salvamento do modelo
 model.save("model.h5")
-model.save("model_saved")  
-
-print("\nModelo salvo em: model.h5 e model_saved/")
+print("\nModelo salvo em: model.h5")
