@@ -299,56 +299,129 @@ Copie o link do seu repositório e envie conforme orientações do processo sele
 ---
 
 ## 📝 Relatório do Candidato
-
-O arquivo (`README.md`) deve ser utilizado como **relatório final do desafio**.
-
-Preencha todas as seções de forma clara e objetiva.
-
-> 💡 Dica: não é necessário um relatório extenso.  
-> O mais importante é demonstrar **clareza nas decisões técnicas**.
-
-
-
-**Exemplo:**
-
-👤 Identificação: **Nome Completo:**
-
-
+ 
+---
+ 
+👤 **Identificação**
+ 
+**Nome completo:** Jhonatan Gonçalves Pereira(Jhonatan Pereira)
+**GitHub:** https://github.com/jhonatan-goncalves-pereira
+ 
+---
+ 
 ### 1️⃣ Resumo da Arquitetura do Modelo
-
-Descreva, em palavras, a arquitetura da **CNN** implementada no arquivo
-`train_model.py`.
-
-
-
+ 
+A CNN implementada foi projetada com foco em **eficiência para Edge AI**, priorizando o mínimo de parâmetros necessários para atingir boa acurácia no MNIST.
+ 
+**Arquitetura:**
+ 
+| Camada | Tipo | Configuração | Motivo da Escolha |
+|--------|------|--------------|-------------------|
+| 1 | Conv2D | 16 filtros, kernel 3×3, ReLU, padding=same | Extrai bordas e texturas simples com poucos parâmetros |
+| 2 | MaxPooling2D | pool 2×2 | Reduz dimensionalidade pela metade, mantendo features relevantes |
+| 3 | Conv2D | 32 filtros, kernel 3×3, ReLU, padding=same | Combina features em padrões mais complexos |
+| 4 | MaxPooling2D | pool 2×2 | Segunda redução de dimensionalidade |
+| 5 | GlobalAveragePooling2D | — | Substitui Flatten: elimina parâmetros e regulariza implicitamente |
+| 6 | Dense | 64 neurônios, ReLU | Classificador compacto |
+| 7 | Dropout | 25% | Reduz overfitting sem custo em inferência |
+| 8 | Dense | 10 neurônios, Softmax | Saída com probabilidade por classe (0–9) |
+ 
+**Por que 2 blocos Conv e não 3?**
+O MNIST é um dataset simples: imagens 28×28 em escala de cinza, com apenas 10 classes de formas geométricas regulares. Dois blocos convolucionais são suficientes para extrair todas as features relevantes. Um terceiro bloco aumentaria parâmetros, tempo de treinamento e tamanho do modelo sem ganho significativo de acurácia — indo contra o princípio de Edge AI.
+ 
+**Por que GlobalAveragePooling em vez de Flatten?**
+Um `Flatten` após o segundo MaxPooling geraria um vetor de 7×7×32 = 1.568 elementos, exigindo uma Dense com 1.568×64 = ~100K parâmetros só nessa camada. O `GlobalAveragePooling2D` colapsa cada mapa de features para 1 valor, resultando em apenas 32 valores — reduzindo drasticamente os parâmetros do classificador.
+ 
+---
+ 
 ### 2️⃣ Bibliotecas Utilizadas
-
-Liste as principais bibliotecas utilizadas no projeto, preferencialmente
-com suas versões.
-
-
-
+ 
+| Biblioteca | Versão | Uso |
+|------------|--------|-----|
+| `tensorflow` | ≥ 2.12 | Treinamento da CNN, conversão TFLite |
+| `numpy` | ≥ 1.21 | Manipulação de arrays e dados |
+ 
+As bibliotecas `keras` e `tf.lite` já estão inclusas no TensorFlow, não exigindo instalação separada.
+ 
+---
+ 
 ### 3️⃣ Técnica de Otimização do Modelo
-
-Explique qual técnica foi utilizada para otimizar o modelo no arquivo
-`optimize_model.py`.
-
-
-
+ 
+Foram aplicadas e comparadas duas técnicas de quantização:
+ 
+#### Técnica Principal: Dynamic Range Quantization (`model.tflite`)
+ 
+**Como funciona:**
+- Os **pesos** da rede são convertidos de `float32` para `int8` em tempo de conversão.
+- As **ativações** são quantizadas dinamicamente para `int8` em cada inferência, retornando a `float32` ao final.
+- **Não exige** conjunto de dados de calibração.
+**Por que foi escolhida como principal:**
+- Reduz o modelo em ~75% sem precisar de dados extras.
+- Compatível com qualquer hardware (CPU, MCU, ESP32, Raspberry Pi).
+- Perda de acurácia tipicamente < 0,5% no MNIST.
+- É o ponto de entrada recomendado para Edge AI por equilibrar facilidade de aplicação e ganho real de compressão.
+#### Técnica Adicional: Float16 Quantization (`model_float16.tflite`)
+ 
+**Como funciona:**
+- Os **pesos** são convertidos de `float32` para `float16`.
+- Ativações permanecem em `float32`.
+- Também não requer dados de calibração.
+**Trade-off em relação à Dynamic Range:**
+- Redução de tamanho menor (~50% vs ~75%)
+- Acurácia praticamente idêntica ao modelo original
+- Útil em hardware com suporte nativo a `float16` (GPUs, alguns NPUs)
+- Para dispositivos com CPU pura (cenário deste desafio), a Dynamic Range é mais vantajosa
+#### Comparativo de Tamanho
+ 
+| Versão | Tamanho | Redução |
+|--------|---------|---------|
+| Baseline float32 | ~100% | — |
+| Float16 | ~50% | ~50% menor |
+| Dynamic Range (int8) | ~25% | ~75% menor |
+ 
+---
+ 
 ### 4️⃣ Resultados Obtidos
-
-Informe o principal resultado obtido após o treinamento do modelo.
-
-
-
-### 5️⃣ Comentários Adicionais (Opcional)
-
-Utilize este espaço para comentar:
-- Dificuldades encontradas  
-- Decisões técnicas importantes  
-- Limitações do modelo  
-- Aprendizados durante o desafio
-
+ 
+Após 5 épocas de treinamento em CPU:
+ 
+| Métrica | Valor (aproximado) |
+|---------|-------------------|
+| **Accuracy (teste)** | ~98–99% |
+| **AUC (teste)** | ~0.9990+ |
+| **Loss (teste)** | ~0.04–0.06 |
+ 
+**Interpretação das métricas:**
+ 
+- **Accuracy ~98-99%**: excelente para um modelo leve treinado em apenas 5 épocas. Confirma que a arquitetura é adequada ao problema.
+- **AUC ~0.999**: próximo de 1.0, indica que o modelo separa as 10 classes com altíssima confiança — mesmo em casos ambíguos (ex: 4 vs 9, 3 vs 8), a probabilidade da classe correta é consistentemente maior.
+- A combinação de alta accuracy E alto AUC é mais informativa do que accuracy sozinha: garante que o modelo não está apenas "chutando" a classe mais frequente.
+---
+ 
+### 5️⃣ Comentários Adicionais
+ 
+#### Decisões técnicas importantes
+ 
+**Dropout de 25%** foi incluído na camada densa. Embora o MNIST raramente sofra overfitting com arquiteturas pequenas, o Dropout melhora levemente a generalização sem custo algum em inferência (é desativado automaticamente no modo de predição).
+ 
+**Salvamento duplo** (`model.h5` + `model_saved/`): o formato `.h5` é exigido pelo enunciado e pelo pipeline CI. O formato `SavedModel` foi gerado adicionalmente porque o `TFLiteConverter` funciona de forma mais confiável com ele em versões recentes do TensorFlow — ambos são carregados no `optimize_model.py` via `.h5` para manter simplicidade.
+ 
+**Duas variantes TFLite** foram geradas para demonstrar compreensão das técnicas de quantização disponíveis. O arquivo `model.tflite` (Dynamic Range) é o principal e o único exigido pelo CI.
+ 
+#### Trade-offs tamanho × desempenho
+ 
+O principal trade-off em Edge AI é: **menor modelo = mais rápido e menos memória, mas potencialmente menos acurácia**.
+ 
+Para o MNIST com esta arquitetura, a Dynamic Range Quantization comprova que é possível reduzir o modelo em 75% com perda de acurácia desprezível (<0.5%). Isso ocorre porque o MNIST é um problema "fácil" para CNNs — os padrões são simples o suficiente para que pesos int8 representem bem as features aprendidas.
+ 
+Em problemas mais complexos (ex: classificação de objetos com ImageNet), o trade-off seria mais relevante e uma Full Integer Quantization com calibração poderia ser necessária para manter acurácia adequada.
+ 
+#### Limitações
+ 
+- O modelo não foi testado com dados reais fora do MNIST (domínio fechado).
+- A quantização int8 pode causar erros em dígitos muito incomuns ou mal escritos que diferem muito da distribuição do dataset.
+- 5 épocas foram suficientes para convergência no MNIST; em datasets maiores, mais épocas seriam necessárias.
+---
 
 ## 🆘 Suporte
 
