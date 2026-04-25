@@ -301,6 +301,18 @@ git push origin main
 Copie o link do seu repositório e envie conforme orientações do processo seletivo no Moodle.
 
 ---
+
+## 🆘 Suporte
+
+Em caso de dúvidas:
+
+- Consulte o material dos cursos EAD
+- Leia atentamente este README
+- Analise os logs das GitHub Actions
+- Utilize os canais oficiais para contato com os instrutores
+
+Boa sorte no processo seletivo.
+****
 </details>
 
 
@@ -348,7 +360,7 @@ O MNIST é um dataset simples: imagens 28×28 em escala de cinza, com apenas 10 
 Um `Flatten` após o segundo MaxPooling geraria um vetor de 7×7×32 = 1.568 elementos, exigindo uma Dense com 1.568×64 = ~100K parâmetros só nessa camada. O `GlobalAveragePooling2D` colapsa cada mapa de features para 1 valor, resultando em apenas 32 valores — reduzindo drasticamente os parâmetros do classificador.
  
 ---
- 
+[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA/tree/docs#-navega%C3%A7%C3%A3o-documentada)
 ### 2️⃣ Bibliotecas Utilizadas
  
 | Biblioteca | Versão | Uso |
@@ -359,7 +371,7 @@ Um `Flatten` após o segundo MaxPooling geraria um vetor de 7×7×32 = 1.568 ele
 As bibliotecas `keras` e `tf.lite` já estão inclusas no TensorFlow, não exigindo instalação separada.
  
 ---
- 
+[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA/tree/docs#-navega%C3%A7%C3%A3o-documentada)
 ### 3️⃣ Técnica de Otimização do Modelo
  
 Foram aplicadas e comparadas duas técnicas de quantização:
@@ -395,7 +407,7 @@ Foram aplicadas e comparadas duas técnicas de quantização:
 | Dynamic Range (int8) | ~25% | ~75% menor |
  
 ---
- 
+[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA/tree/docs#-navega%C3%A7%C3%A3o-documentada)
 ### 4️⃣ Resultados Obtidos
  
 Após 5 épocas de treinamento em CPU:
@@ -412,7 +424,7 @@ Após 5 épocas de treinamento em CPU:
 - **AUC ~0.999**: próximo de 1.0, indica que o modelo separa as 10 classes com altíssima confiança — mesmo em casos ambíguos (ex: 4 vs 9, 3 vs 8), a probabilidade da classe correta é consistentemente maior.
 - A combinação de alta accuracy E alto AUC é mais informativa do que accuracy sozinha: garante que o modelo não está apenas "chutando" a classe mais frequente.
 ---
- 
+[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA/tree/docs#-navega%C3%A7%C3%A3o-documentada)
 ### 5️⃣ Comentários Adicionais
  
 #### Decisões técnicas importantes
@@ -430,7 +442,7 @@ O principal trade-off em Edge AI é: **menor modelo = mais rápido e menos memó
 Para o MNIST com esta arquitetura, a Dynamic Range Quantization comprova que é possível reduzir o modelo em 75% com perda de acurácia desprezível (<0.5%). Isso ocorre porque o MNIST é um problema "fácil" para CNNs — os padrões são simples o suficiente para que pesos int8 representem bem as features aprendidas.
  
 Em problemas mais complexos (ex: classificação de objetos com ImageNet), o trade-off seria mais relevante e uma Full Integer Quantization com calibração poderia ser necessária para manter acurácia adequada.
- 
+[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA/tree/docs#-navega%C3%A7%C3%A3o-documentada)
 #### Limitações
  
 - O modelo não foi testado com dados reais fora do MNIST (domínio fechado).
@@ -438,14 +450,3 @@ Em problemas mais complexos (ex: classificação de objetos com ImageNet), o tra
 - 5 épocas foram suficientes para convergência no MNIST; em datasets maiores, mais épocas seriam necessárias.
 ---
 
-## 🆘 Suporte
-
-Em caso de dúvidas:
-
-- Consulte o material dos cursos EAD
-- Leia atentamente este README
-- Analise os logs das GitHub Actions
-- Utilize os canais oficiais para contato com os instrutores
-
-Boa sorte no processo seletivo.
-****
