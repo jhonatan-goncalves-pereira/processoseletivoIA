@@ -1,5 +1,9 @@
 # Processo Seletivo – Intensivo Maker | AI
 
+<details>
+<summary><strong> SETUP da Etapa Prática – Machine Learning, Visão Computacional e Otimização de modelos para sistemas embarcados (Edge AI)</strong></summary>
+<br>
+
 Bem-vindo(a) à **etapa prática do processo seletivo para o Intensivo Maker**.
 
 Esta atividade tem como objetivo avaliar competências técnicas relacionadas a **Machine Learning**, **Visão Computacional** e **Otimização de modelos para sistemas embarcados (Edge AI)**, a partir da aplicação prática dos conhecimentos adquiridos nos cursos EAD da etapa anterior.
@@ -9,7 +13,7 @@ Esta atividade tem como objetivo avaliar competências técnicas relacionadas a 
 
 ---
 
-## 📌 Navegação Rápida
+## 📌 RESUMO SETUP
 
 - 🏁 [Passo 0 – Antes de Tudo](#-passo-0-antes-de-tudo)
 - ⚙ [Passo 1 – Preparando o Ambiente](#-passo-1-preparando-o-ambiente)
@@ -297,15 +301,26 @@ git push origin main
 Copie o link do seu repositório e envie conforme orientações do processo seletivo no Moodle.
 
 ---
+</details>
 
-## 📝 Relatório do Candidato
- 
+
+## 📑 Navegação documentada
+- [👤 Identificação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIoT/tree/docs#-identificação-do-candidato)
+- [1️⃣ Resumo da Arquitetura](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#1%EF%B8%8F%E2%83%A3-resumo-da-arquitetura-do-modelo)
+- [2️⃣ Bibliotecas Utilizadas](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#2%EF%B8%8F%E2%83%A3-bibliotecas-utilizadas)
+- [3️⃣ Técnicas de otimização de modelo](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#3%EF%B8%8F%E2%83%A3-t%C3%A9cnica-de-otimiza%C3%A7%C3%A3o-do-modelo)
+- [4️⃣ Resultados obtidos](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#4%EF%B8%8F%E2%83%A3-resultados-obtidos)
+- [5️⃣ Comentários adicionais](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#5%EF%B8%8F%E2%83%A3-coment%C3%A1rios-adicionais)
+- [6️⃣ Resultados](https://github.com/jhonatan-goncalves-pereira/processoseletivoIoT/tree/docs#6️⃣-resultados-obtidos)
+- [7️⃣ Melhorias](https://github.com/jhonatan-goncalves-pereira/processoseletivoIoT/tree/docs#7️⃣-limitações-e-melhorias-futuras)
+
 ---
+## 📝 Relatório do Candidato
  
 👤 **Identificação**
  
-**Nome completo:** Jhonatan Gonçalves Pereira(Jhonatan Pereira)
-**GitHub:** https://github.com/jhonatan-goncalves-pereira
+- **Nome completo:** Jhonatan Gonçalves Pereira
+- **GitHub:** https://github.com/jhonatan-goncalves-pereira
  
 ---
  
