@@ -9,9 +9,6 @@ env/
 *.egg-info/
 
 # Modelos gerados
-
-model.h5
-*.tflite
 *.pb
 *.pbtxt
 *.meta
