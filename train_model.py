@@ -113,7 +113,6 @@ history = model.fit(
 )
 
 # 5 avaliacao de metricas
-# ═══════════════════════════════════════════════
 print("\n[5/5] Avaliacao final no conjunto de teste (10.000 amostras)...")
 
 results = model.evaluate(x_test, y_test, verbose=0)

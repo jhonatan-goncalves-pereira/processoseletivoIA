@@ -18,9 +18,6 @@ print(f"   Parametros : {total_params:,}  |  Formato: float32")
 print(f"   Tamanho    : {h5_size_kb:.1f} KB")
 
 # 2 usando dados de calibrar
-# Full Integer Quantization exige amostras representativas para
-# calcular os ranges de ativacao em cada camada da rede
-# aqui usando 200 amostras — suficiente para o MNIST
 print("\n[2/5] Preparando dados de calibracao...")
 
 (_, _), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
@@ -94,20 +91,6 @@ conv = tf.lite.TFLiteConverter.from_keras_model(model)
 sizes["base"] = converter_e_salvar(conv, "model_base.tflite", "Baseline float32")
 
 # variante 2 Dynamic Range Quantization (PRINCIPAL)
-#
-# funcionamento:
-#   - pesos: float32 -> int8 em tempo de CONVERSAO
-#   - ativacoes: quantizadas dinamicamente para int8 em cada inferencia
-#     retornando a float32 ao final
-#   - NAO exige dataset de calibracao
-#
-# uso:
-#   - reduz mais ou menos 75% no tamanho (float32 -> int8 = 4x menor)
-#   - compativel com qualquer CPU: MCU, ESP32, Raspberry Pi
-#   - perda de acuracia tipicamente < 0.5% no MNIST
-#   - ponto de entrada recomendado pelo Google para TFLite embarcado
-#   - nao exige hardware especializado (NPU, GPU)
-#
 print("\n  [2/4] Dynamic Range Quantization (TECNICA PRINCIPAL)...")
 print("        Pesos: float32 -> int8 em conversao")
 print("        Ativacoes: quantizadas dinamicamente em runtime")
@@ -116,20 +99,6 @@ conv.optimizations = [tf.lite.Optimize.DEFAULT]
 sizes["dyn"] = converter_e_salvar(conv, "model.tflite", "Dynamic Range int8")
 
 # Float16 Quantization
-#
-# funcionamento:
-#   - pesos: float32 -> float16
-#   - ativacoes: permanecem em float32
-#   - NAO exige dataset de calibracao
-#
-# quando se usa
-#   - hardware com suporte nativo fp16: GPUs, NPUs modernos
-#   - quando preservar precisao de ativacoes e prioritario
-#
-# limte vs Dynamic Range:
-#   - reducao menor (~50% vs ~75%)
-#   - sem vantagem em CPU pura (MCU/ESP32 nao tem fp16 nativo)
-#
 print("\n  [3/4] Float16 Quantization (tecnica adicional)...")
 print("        Pesos: float32 -> float16 | Ativacoes: float32")
 conv = tf.lite.TFLiteConverter.from_keras_model(model)
@@ -138,20 +107,6 @@ conv.target_spec.supported_types = [tf.float16]
 sizes["f16"] = converter_e_salvar(conv, "model_float16.tflite", "Float16")
 
 # variante 4: Full Integer Quantization
-#
-# funcionamento:
-#   - pesos E ativacoes: float32 -> int8
-#   - eXIGE dataset de calibracao para calcular ranges de ativacao
-#   - input/output podem ser mantidos em float32 (modo hibrido)
-#
-# uso:
-#   - maxima compressao em hardware int8 dedicado (Coral Edge TPU)
-#   - MCUs com suporte a operacoes SIMD int8
-#   - quando latencia de inferencia e critica
-#
-# desvantagem:
-#   - oode ter degradacao maior de acuracia (~1-2%)
-#   - exige processo de calibracao com dados representativos
 #
 print("\n  [4/4] Full Integer Quantization (avancada)...")
 print("        Pesos E ativacoes: float32 -> int8")

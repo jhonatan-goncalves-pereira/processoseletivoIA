@@ -623,3 +623,76 @@ Em problemas mais complexos (ex: ImageNet, detecção de objetos), o trade-off s
 ---
  
 [⬆️ Voltar à navegação](#-navegação)
+
+---
+
+## 🌿 Estratégia de Branches e Fluxo de Desenvolvimento
+
+Este projeto segue uma **estratégia de branching organizada** baseada no Git Flow, facilitando o desenvolvimento paralelo, code review e manutenção do código.
+
+### Branches Principais
+
+| Branch | Finalidade | Status |
+|--------|-----------|--------|
+| `main` | Branch principal com versão estável e validada pelo CI | ✅ Produção |
+| `develop` | Branch de desenvolvimento com features integradas | 🔄 Integração |
+
+### Branches de Suporte Criadas
+
+| Branch | Tipo | Finalidade |
+|--------|------|-----------|
+| `docs` | Documentação | Atualizações do README e documentação técnica |
+| `fix/alinhar-resultados-com-logs` | Correção | Alinhamento das métricas do README com logs do CI |
+| `fix/train-model-convergencia` | Correção | Ajustes na convergência do treinamento do modelo |
+| `refactor/maximizar-notas-avaliacao` | Refatoração | Otimizações para maximizar critérios de avaliação |
+
+### Workflow Utilizado
+
+```mermaid
+gitGraph
+   commit id: "main\nv1.0"
+   branch develop
+   checkout develop
+   commit id: "feat: CNN"
+   commit id: "feat: metrics"
+   branch fix/train-model-convergencia
+   checkout fix/train-model-convergencia
+   commit id: "fix: convergence"
+   checkout develop
+   merge fix/train-model-convergencia
+   branch fix/alinhar-resultados-com-logs
+   checkout fix/alinhar-resultados-com-logs
+   commit id: "fix: align logs"
+   checkout develop
+   merge fix/alinhar-resultados-com-logs
+   branch refactor/maximizar-notas-avaliacao
+   checkout refactor/maximizar-notas-avaliacao
+   commit id: "refactor: optimize"
+   checkout develop
+   merge refactor/maximizar-notas-avaliacao
+   branch docs
+   checkout docs
+   commit id: "docs: README"
+   checkout develop
+   merge docs
+   checkout main
+   merge develop tag: "v1.1"
+```
+
+### Vantagens desta Abordagem
+
+✅ **Isolamento de features** — Cada funcionalidade desenvolvida em branch específica  
+✅ **Code review facilitado** — PRs objetivos e focados em mudanças específicas  
+✅ **Histórico limpo** — Separação clara entre correções, documentação e refatorações  
+✅ **CI/CD organizado** — Workflows rodam automaticamente por branch com validações  
+✅ **Rollback seguro** — Possibilidade de reverter features específicas sem afetar o todo  
+
+### Convenção de Nomes
+
+- `main` / `develop` — Branches principais (sempre protegidas)
+- `feat/*` — Novas funcionalidades
+- `fix/*` — Correções de bugs
+- `docs/*` — Mudanças na documentação
+- `refactor/*` — Refatorações sem mudança de comportamento
+
+---
