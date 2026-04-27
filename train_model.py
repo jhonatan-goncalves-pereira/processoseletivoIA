@@ -39,23 +39,6 @@ print(f"   Range  : [{x_train.min():.1f}, {x_train.max():.1f}]  (normalizado)")
 
 
 # 2  arquitetura CNN
-# decisoes:
-#
-# blocos Conv+Pool (nao 3)
-#   MNIST e simples (28x28, escala de cinza, 10 classes geometricas)
-#   Um 3o bloco aumentaria parametros sem ganho real de acuracia
-#   indo contra o principio de Edge AI
-#
-# GlobalAveragePooling2D (nao Flatten):
-#   Flatten apos MaxPool geraria 7x7x64 = 3.136 entradas na Dense
-#   -> ~200K parametros so nessa camada
-#   GAP colapsa para 64 valores -> 4.160 parametros
-#   Reducao de 97% na camada Dense
-#
-# Dropout 0.25:
-#   Melhora generalizacao sem custo em inferencia
-#   (desativado automaticamente no modo predict/evaluate).
-#
 print("\n[2/5] Construindo arquitetura CNN...")
 
 model = keras.Sequential(
@@ -101,10 +84,6 @@ print(f"   -> Modelo adequado para MCU/ESP32 com >=256 KB RAM")
 
 
 # 3 compilacao
-# Adam otimizador adaptativo, converge bem sem ajuste manual de lr
-# sparse_categorical_crossentropy e eficiente para labels inteiros (0-9)
-# top-2 Accuracy: metrica adicional — mede se a classe correta
-#   esta entre as 2 maiores probabilidades e relevante para sistemas tem logica de fallback em dispositivos embarcados.
 print("\n[3/5] Compilando modelo...")
 
 model.compile(

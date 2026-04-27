@@ -6,7 +6,6 @@ SEP  = "=" * 65
 SEP2 = "-" * 65
 
 # 1 carrega model treinado
-# ═══════════════════════════════════════════════════════════
 print("\n" + SEP)
 print("  OTIMIZACAO PARA EDGE AI — TFLite Converter")
 print(SEP)
@@ -83,7 +82,6 @@ def avaliar_tflite_safe(model_path, x_sample, y_sample, n=500):
         return None
 
 # 3 converte tflite 4 variacoes
-# ═══════════════════════════════════════════════════════════
 print("\n[3/5] Convertendo para TFLite — 4 variantes...")
 print(SEP2)
 
@@ -168,7 +166,6 @@ sizes["int8"] = converter_e_salvar(conv, "model_int8.tflite", "Full Integer int8
 
 
 # 4 avaliando pós conversao
-# ═══════════════════════════════════════════════════════════
 print("\n[4/5] Avaliando acuracia pos-conversao (500 amostras)...")
 print(SEP2)
 
@@ -180,7 +177,6 @@ acc = {
 }
 
 # 5 relatorio comparativo
-# ═══════════════════════════════════════════════════════════
 print("\n[5/5] Relatorio comparativo...")
 print("\n" + SEP)
 print("  COMPARATIVO: TECNICA x TAMANHO x ACURACIA")
