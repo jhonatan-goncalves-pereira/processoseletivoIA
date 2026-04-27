@@ -503,12 +503,12 @@ Conversão direta sem otimização. Mantém todos os pesos em `float32`.
 - Processo de calibração obrigatório
 #### Comparativo Final
  
-| Versão | Arquivo | Tamanho | vs Baseline | Acurácia* | Hardware ideal |
-|--------|---------|---------|-------------|-----------|----------------|
-| Baseline float32 | `model_base.tflite` | ~96 KB | 100% | ~90% | Qualquer |
-| **Dynamic Range** ⭐ | **`model.tflite`** | **~32 KB** | **~33%** | **~89.5%** | **CPU pura** |
-| Float16 | `model_float16.tflite` | ~52 KB | ~54% | ~90% | GPU/NPU |
-| Full Integer | `model_int8.tflite` | ~28 KB | ~29% | ~89% | Edge TPU |
+| Versão | Tamanho | Redução | Acurácia pós-conversão |
+|--------|---------|---------|------------------------|
+| Baseline float32 | 96.3 KB | — | 84.20% |
+| Dynamic Range (int8) | 31.8 KB | 67% | 83.00% |
+| Float16 | 51.6 KB | 46% | 84.20% |
+| Full Integer (int8) | 32.3 KB | 66% | 84.40% |
  
 *500 amostras de teste pós-conversão
  
@@ -522,21 +522,24 @@ Conversão direta sem otimização. Mantém todos os pesos em `float32`.
  
 | Métrica | Valor |
 |---------|-------|
-| **Accuracy (teste)** | ~90–91% |
-| **Top-2 Accuracy (teste)** | ~98%+ |
-| **Loss (teste)** | ~0.31 |
-| **Parâmetros totais** | 23.626 |
-| **Tamanho model.h5** | ~320 KB |
-| **Tamanho model.tflite** | ~32 KB |
+| **Accuracy (teste)** | 86.44% |
+| **Top-2 Accuracy (teste)** | 95.09% |
+| **Loss (teste)** | 0.4240 |
+| **Acertos absolutos** | 8.644 de 10.000 |
+| **Confiança média (acertos)** | 84.37% |
+| **Confiança média (erros)** | 55.38% |
+| **Gap de confiança** | 28.99pp |
  
 #### Evolução da Acurácia por Época
  
 ```
-Época 1: val_accuracy = 66%  ██████████████████████████
-Época 2: val_accuracy = 82%  █████████████████████████████████
-Época 3: val_accuracy = 87%  ███████████████████████████████████
-Época 4: val_accuracy = 88%  ████████████████████████████████████
-Época 5: val_accuracy = 92%  ██████████████████████████████████████
+| Época | Val Accuracy | Val Loss |
+|-------|-------------|----------|
+| 1 | 64.25% | 1.1522 |
+| 2 | 79.25% | 0.7274 |
+| 3 | 83.65% | 0.5524 |
+| 4 | 86.57% | 0.4525 |
+| 5 | 88.38% | 0.3950 |
 ```
  
 #### Acurácia por Dígito (conjunto de teste)
