@@ -317,14 +317,12 @@ Boa sorte no processo seletivo.
 
 
 ## 📑 Navegação documentada
-- [👤 Identificação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIoT/tree/docs#-identificação-do-candidato)
-- [1️⃣ Resumo da Arquitetura](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#1%EF%B8%8F%E2%83%A3-resumo-da-arquitetura-do-modelo)
+- [👤 Identificação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#-relat%C3%B3rio-do-candidato)
+- [1️⃣ Resumo do Modelo](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#1%EF%B8%8F%E2%83%A3-resumo-da-arquitetura-do-modelo)
 - [2️⃣ Bibliotecas Utilizadas](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#2%EF%B8%8F%E2%83%A3-bibliotecas-utilizadas)
 - [3️⃣ Técnicas de otimização de modelo](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#3%EF%B8%8F%E2%83%A3-t%C3%A9cnica-de-otimiza%C3%A7%C3%A3o-do-modelo)
 - [4️⃣ Resultados obtidos](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#4%EF%B8%8F%E2%83%A3-resultados-obtidos)
 - [5️⃣ Comentários adicionais](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#5%EF%B8%8F%E2%83%A3-coment%C3%A1rios-adicionais)
-- [6️⃣ Resultados](https://github.com/jhonatan-goncalves-pereira/processoseletivoIoT/tree/docs#6️⃣-resultados-obtidos)
-- [7️⃣ Melhorias](https://github.com/jhonatan-goncalves-pereira/processoseletivoIoT/tree/docs#7️⃣-limitações-e-melhorias-futuras)
 
 ---
 ## 📝 Relatório do Candidato
@@ -360,7 +358,7 @@ O MNIST é um dataset simples: imagens 28×28 em escala de cinza, com apenas 10 
 Um `Flatten` após o segundo MaxPooling geraria um vetor de 7×7×32 = 1.568 elementos, exigindo uma Dense com 1.568×64 = ~100K parâmetros só nessa camada. O `GlobalAveragePooling2D` colapsa cada mapa de features para 1 valor, resultando em apenas 32 valores — reduzindo drasticamente os parâmetros do classificador.
  
 ---
-[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA/tree/docs#-navega%C3%A7%C3%A3o-documentada)
+[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#-navega%C3%A7%C3%A3o-documentada)
 ### 2️⃣ Bibliotecas Utilizadas
  
 | Biblioteca | Versão | Uso |
@@ -371,7 +369,7 @@ Um `Flatten` após o segundo MaxPooling geraria um vetor de 7×7×32 = 1.568 ele
 As bibliotecas `keras` e `tf.lite` já estão inclusas no TensorFlow, não exigindo instalação separada.
  
 ---
-[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA/tree/docs#-navega%C3%A7%C3%A3o-documentada)
+[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#-navega%C3%A7%C3%A3o-documentada)
 ### 3️⃣ Técnica de Otimização do Modelo
  
 Foram aplicadas e comparadas duas técnicas de quantização:
@@ -407,7 +405,7 @@ Foram aplicadas e comparadas duas técnicas de quantização:
 | Dynamic Range (int8) | ~25% | ~75% menor |
  
 ---
-[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA/tree/docs#-navega%C3%A7%C3%A3o-documentada)
+[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#-navega%C3%A7%C3%A3o-documentada)
 ### 4️⃣ Resultados Obtidos
  
 Após 5 épocas de treinamento em CPU:
@@ -424,7 +422,7 @@ Após 5 épocas de treinamento em CPU:
 - **AUC ~0.999**: próximo de 1.0, indica que o modelo separa as 10 classes com altíssima confiança — mesmo em casos ambíguos (ex: 4 vs 9, 3 vs 8), a probabilidade da classe correta é consistentemente maior.
 - A combinação de alta accuracy E alto AUC é mais informativa do que accuracy sozinha: garante que o modelo não está apenas "chutando" a classe mais frequente.
 ---
-[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA/tree/docs#-navega%C3%A7%C3%A3o-documentada)
+[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#-navega%C3%A7%C3%A3o-documentada)
 ### 5️⃣ Comentários Adicionais
  
 #### Decisões técnicas importantes
@@ -442,7 +440,7 @@ O principal trade-off em Edge AI é: **menor modelo = mais rápido e menos memó
 Para o MNIST com esta arquitetura, a Dynamic Range Quantization comprova que é possível reduzir o modelo em 75% com perda de acurácia desprezível (<0.5%). Isso ocorre porque o MNIST é um problema "fácil" para CNNs — os padrões são simples o suficiente para que pesos int8 representem bem as features aprendidas.
  
 Em problemas mais complexos (ex: classificação de objetos com ImageNet), o trade-off seria mais relevante e uma Full Integer Quantization com calibração poderia ser necessária para manter acurácia adequada.
-[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA/tree/docs#-navega%C3%A7%C3%A3o-documentada)
+[⬆️ Voltar à navegação](https://github.com/jhonatan-goncalves-pereira/processoseletivoIA#-navega%C3%A7%C3%A3o-documentada)
 #### Limitações
  
 - O modelo não foi testado com dados reais fora do MNIST (domínio fechado).
