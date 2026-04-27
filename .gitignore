@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+env/
+*.egg-info/
+
+# Modelos gerados
+
+model.h5
+*.tflite
+*.pb
+*.pbtxt
+*.meta
+*.index
+checkpoints/
+saved_model/
+
+# Build artifacts
+build/
+dist/
+*.so
+*.dll
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
